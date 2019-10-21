@@ -55,5 +55,15 @@ class CustomerDB
         $stmt->execute();
     }
 
+    public function update($id, $customer)
+    {
+        $sql = "UPDATE customers SET name = ?, email = ?, address = ? WHERE id=?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(1, $customer->name);
+        $stmt->bindParam(2, $customer->email);
+        $stmt->bindParam(3, $customer->address);
+        $stmt->bindParam(4, $id);
+        $stmt->execute();
+    }
 
 }

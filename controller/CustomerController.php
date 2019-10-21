@@ -48,4 +48,18 @@ class CustomerController
             header("Location: index.php");
         }
     }
+
+    public function edit()
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $id = $_GET['id'];
+            $customer = $this->customerDB->getCustomerById($id);
+            include 'view/edit.php';
+        }else {
+            $id = $_POST['id'];
+            $customer = new Customer($_POST['name'],$_POST['email'],$_POST['address']);
+            $this->customerDB->update($id,$customer);
+            header("Location: index.php");
+        }
+    }
 }
