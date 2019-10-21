@@ -1,4 +1,5 @@
 <?php
+
 namespace Model;
 
 class CustomerDB
@@ -10,7 +11,8 @@ class CustomerDB
         $this->connection = $connection;
     }
 
-    public function create($customer){
+    public function create($customer)
+    {
         $sql = "INSERT INTO customers(name, email, address) VALUES (?, ?, ?)";
         $statement = $this->connection->prepare($sql);
         $statement->bindParam(1, $customer->name);
@@ -25,11 +27,33 @@ class CustomerDB
         $stmt = $this->connection->query($sql);
         $result = $stmt->fetchAll();
         $customers = [];
-        foreach ($result as $value ){
-            $customer = new Customer($value['name'],$value['email'],$value['address']);
+        foreach ($result as $value) {
+            $customer = new Customer($value['name'], $value['email'], $value['address']);
             $customer->id = $value['id'];
-            array_push($customers,$customer);
+            array_push($customers, $customer);
         }
         return $customers;
     }
+
+    public function getCustomerById($id)
+    {
+        $sql = "SELECT * FROM customers WHERE id=?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        $customer = new Customer($result['name'], $result['email'], $result['address']);
+        $customer->id = $result['id'];
+        return $customer;
+    }
+
+    public function delete($id)
+    {
+        $sql = "DELETE FROM customers WHERE id=?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+    }
+
+
 }

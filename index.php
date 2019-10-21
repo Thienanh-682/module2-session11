@@ -3,7 +3,7 @@ require "Model/DBConnection.php";
 require "Model/CustomerDB.php";
 require "Model/Customer.php";
 require "controller/CustomerController.php";
-use \Controller\CustomerController;
+use Controller\CustomerController;
 ?>
 
 

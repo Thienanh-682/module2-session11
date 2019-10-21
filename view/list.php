@@ -15,6 +15,7 @@
         <td><?php echo $customer->name ?></td>
         <td><?php echo $customer->email ?></td>
         <td><?php echo $customer->address ?>
+        <td><a href="index.php?page=delete&id=<?php echo $customer->id?>">Delete</a></td>
             <?php endforeach; ?>
     </tbody>
 </table>

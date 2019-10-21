@@ -1,4 +1,5 @@
 <?php
+
 namespace controller;
 
 use Model\Customer;
@@ -18,7 +19,7 @@ class CustomerController
     public function add()
     {
         include 'view/add.php';
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $name = $_POST['name'];
             $email = $_POST['email'];
             $address = $_POST['address'];
@@ -28,9 +29,23 @@ class CustomerController
             header("Location: index.php");
         }
     }
+
     public function index()
     {
         $customers = $this->customerDB->getAll();
         include 'view/list.php';
+    }
+
+    public function delete()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $id = $_GET['id'];
+            $customer = $this->customerDB->getCustomerById($id);
+            include 'view/delete.php';
+        } else {
+            $id = $_POST['id'];
+            $this->customerDB->delete($id);
+            header("Location: index.php");
+        }
     }
 }
